@@ -49,12 +49,20 @@ namespace ShopBridgeApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Product>> Get(int id)
         {
+            try
+            {
             var product = await _productRepository.Get(id);
             if (product == null)
             {
                 return NotFound();
             }
             return Ok(product);
+            }
+              catch(Exception ex)
+            {
+               throw ex;
+            }
+            
         }
 
         // POST api/<ProductsController>
@@ -91,6 +99,9 @@ namespace ShopBridgeApi.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] Product prod)
         {
+        
+            try
+            {
             var product = await _productRepository.Get(id);
             if (product == null)
             {
@@ -98,12 +109,20 @@ namespace ShopBridgeApi.Controllers
             }
             await _productRepository.Update(id, prod);
             return Ok();
+            }
+            
+              catch(Exception ex)
+            {
+               throw ex;
+            }
         }
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
+          try
+            {
             var product = await _productRepository.Get(id);
             if (product == null)
             {
@@ -112,8 +131,13 @@ namespace ShopBridgeApi.Controllers
             await _productRepository.Delete(id);
 
             return Ok();
-
+            }
         }
+          catch(Exception ex)
+            {
+               throw ex;
+            }
+        
     }
 }
 
